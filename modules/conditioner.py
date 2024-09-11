@@ -15,7 +15,7 @@ class HFEmbedder(nn.Module):
             # local_path_tokenizer = '/maindata/data/shared/multimodal/public/ckpts/stable-diffusion-3-medium-diffusers/tokenizer'
             model_id = "stabilityai/stable-diffusion-3-medium-diffusers"
             self.tokenizer: CLIPTokenizer = CLIPTokenizer.from_pretrained(model_id, subfolder="tokenizer", max_length=max_length)
-            self.hf_module: CLIPTextModel = CLIPTextModel.from_pretrained(model_id, subfolder="tokenizer", **hf_kwargs).half()
+            self.hf_module: CLIPTextModel = CLIPTextModel.from_pretrained(model_id, subfolder="text_encoder", **hf_kwargs).half()
         elif version.startswith("laion"): 
             local_path = '/maindata/data/shared/multimodal/public/dataset_music/clap'
             self.tokenizer = AutoTokenizer.from_pretrained(local_path, max_length=max_length)
@@ -24,8 +24,8 @@ class HFEmbedder(nn.Module):
             # local_path = '/maindata/data/shared/multimodal/public/ckpts/stable-diffusion-3-medium-diffusers/text_encoder_3'
             # local_path_tokenizer = '/maindata/data/shared/multimodal/public/ckpts/stable-diffusion-3-medium-diffusers/tokenizer_3'
             model_id = "stabilityai/stable-diffusion-3-medium-diffusers"
-            self.tokenizer: T5Tokenizer = T5Tokenizer.from_pretrained(model_id, subfolder="tokenizer", max_length=max_length)
-            self.hf_module: T5EncoderModel = T5EncoderModel.from_pretrained(model_id, subfolder="text_encoder", **hf_kwargs).half()
+            self.tokenizer: T5Tokenizer = T5Tokenizer.from_pretrained(model_id, subfolder="tokenizer_3", max_length=max_length)
+            self.hf_module: T5EncoderModel = T5EncoderModel.from_pretrained(model_id, subfolder="text_encoder_3", **hf_kwargs).half()
 
         self.hf_module = self.hf_module.eval().requires_grad_(False)
 
